@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const _env = require('dotenv');
 const mongoose = require('mongoose');
+const passport_auth = require('./services/authService');
 
 _env.config();
 
@@ -16,6 +17,9 @@ const userRoutes = require('./routes/userRouter');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
+
+//initialize passport
+passport_auth.initPassport(app);
 
 //route declaration
 app.use('/api/user', userRoutes);

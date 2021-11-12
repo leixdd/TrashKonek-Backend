@@ -5,7 +5,7 @@ const setModel = (details) => new User(details);
 
 const getUserID = (id, callback) => User.findById(id, '_id', callback);
 const getUser = (id, callback) => User.findById(id, callback);
-const getUserUsingEmail = (email, callback) => User.findOne({ 'loginDetails.email': email }, callback);
+const getUserUsingEmail =  (email, callback) =>  User.findOne({ 'loginDetails.email': email }, callback);
 
 const addUser = (user, callback) => {
     bcrypt.genSalt(10, (err, salt) => {
@@ -17,11 +17,14 @@ const addUser = (user, callback) => {
         })
     })
 }
+
+const comparePassword = async (password, userPassword, callback) => await bcrypt.compare(password, userPassword, callback);
  
 module.exports = {
     setModel,
     getUserUsingEmail,
     getUserID,
-    getUser,
-    addUser
+    addUser,
+    comparePassword,
+    getUser
 }
