@@ -15,3 +15,5 @@
 ## API
 
 1. /api/user/register - { "email" : "", "password": "" }
+2. /api/user/auth - { "email" : "", "password": "" }
+3. /api/user - { "id" : "" }
