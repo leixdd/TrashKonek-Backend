@@ -10,7 +10,7 @@ _env.config();
 const port = process.env.PORT || 3000;
 
 //connect to mongodb
-mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`);
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_DATABASE}`);
 
 //import routes 
 const userRoutes = require('./routes/userRouter');

@@ -20,13 +20,13 @@ const userRegistration = (request, response) => {
         if (!data) {
             UserRepository.addUser(userModel, (err, data) => {
                 if (err) {
-                    response.json({ success: false, msg: 'Failed to register user' });
+                    response.status(400).json({ success: false, msg: 'Failed to register user' });
                 } else {
-                    response.json({ success: true, msg: 'User successfully registered' });
+                    response.status(200).json({ success: true, msg: 'User successfully registered' });
                 }
             });
         } else {
-            response.json({ success: false, msg: 'Failed: Email Exist' });
+            response.status(400).json({ success: false, msg: 'Failed: Email Exist' });
         }
     });
 
@@ -37,7 +37,7 @@ const userLogin = (req, res, next) => passport.authenticate('signin', (err, user
         
         if (err) return next(new Error("An error occured"));
 
-        if (!user) return res.json({ success: false, info });
+        if (!user) return res.status(401).json({ success: false, info });
 
         req.login(user, {session: false}, async (err) => {
             if (err) return next(err);
@@ -46,7 +46,7 @@ const userLogin = (req, res, next) => passport.authenticate('signin', (err, user
                 _id: user._id
             }, process.env.JWT_SECRET);
 
-            return res.json({ success: true, token: 'Bearer ' + token, user: { id: user._id }})
+            return res.status(200).json({ success: true, token: 'Bearer ' + token, user: { id: user._id }})
         })
     } catch (error) {
         if (error) return next(error);
@@ -55,9 +55,9 @@ const userLogin = (req, res, next) => passport.authenticate('signin', (err, user
 
 
 const getUser = (req, res) => UserRepository.getUser(req.body.id, (err, user) => {
-    if (err) return res.json({ success: false, data: "An Error occured" });
+    if (err) return res.status(503).json({ success: false, data: "An Error occured" });
     
-    return res.json({ success: true, data: user });
+    return res.status(200).json({ success: true, data: user });
 });
 
 
